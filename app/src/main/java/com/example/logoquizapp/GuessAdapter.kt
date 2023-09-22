@@ -3,14 +3,13 @@ package com.example.logoquizapp
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.logoquizapp.databinding.ItemAnswerBinding
 import com.example.logoquizapp.databinding.ItemGuessBinding
 
 class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
 
-    class GuessViewHolder(binding: ItemGuessBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class GuessViewHolder(val binding: ItemGuessBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind() {
-
+            binding.tvCharacter.text = guessChars[bindingAdapterPosition].toString()
         }
     }
 
@@ -19,14 +18,14 @@ class GuessAdapter: RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
         return GuessViewHolder(binding)
     }
 
-    private var guessChar: String = "ABC"
+    private val guessChars = mutableListOf<Char>()
 
     override fun getItemCount(): Int {
-        return guessChar.length
+        return guessChars.size
     }
 
-    fun setData(ans: String) {
-        guessChar = ans
+    fun setData(ans: List<Char>) {
+        guessChars.addAll(ans)
         notifyDataSetChanged()
     }
 

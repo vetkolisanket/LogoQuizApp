@@ -41,9 +41,30 @@ class MainActivity : ComponentActivity() {
             it?.let { quiz ->
                 binding.ivLogo.load(quiz.imageUrl)
                 answerAdapter.setData(quiz.name)
-                guessAdapter.setData(quiz.name)
+                guessAdapter.setData(jumbleUp(quiz.name))
             }
         }
+    }
+
+    private fun jumbleUp(name: String): List<Char> {
+        val charList = name.toCharArray().toMutableList()
+        val len = name.length
+        val randChars = getRandomChars(20-len)
+        return randomisedChars(charList, randChars)
+    }
+
+    private fun randomisedChars(charList: MutableList<Char>, randChars: List<Char>): List<Char> {
+        charList.addAll(randChars);
+        charList.shuffle()
+        return charList
+    }
+
+    private fun getRandomChars(len: Int): List<Char> {
+        val list = mutableListOf<Char>()
+        for (i in 0 until len) {
+            list.add(('A'..'Z').random())
+        }
+        return list
     }
 }
 
