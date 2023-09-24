@@ -35,6 +35,7 @@ class AnswerAdapter: RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>() {
     }
 
     fun onGuessClick(guess: Char) {
+        if (position >= cells.size) return
         if (guess != cells[position].char) {
             callback?.onWrongGuess()
         } else {
