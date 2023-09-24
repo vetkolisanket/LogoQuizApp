@@ -1,8 +1,10 @@
 package com.example.logoquizapp
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.logoquizapp.databinding.ActivityMainBinding
 
@@ -29,10 +31,30 @@ class MainActivity : ComponentActivity() {
         binding.rvAnswer.apply {
             this.adapter = answerAdapter
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            answerAdapter.callback = object : AnswerAdapter.Callback {
+                override fun onWrongGuess() {
+                    Toast.makeText(this@MainActivity, "Wrong guess", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onRightGuess() {
+                    Toast.makeText(this@MainActivity, "Right guess", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onAllCharsAnswered() {
+                    Toast.makeText(this@MainActivity, "Next quiz", Toast.LENGTH_SHORT).show()
+                }
+
+            }
         }
         binding.rvGuess.apply {
             adapter = guessAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(this@MainActivity, 10)
+            guessAdapter.callback = object : GuessAdapter.Callback {
+                override fun onGuessClick(c: Char) {
+                    answerAdapter.onGuessClick(c)
+                }
+
+            }
         }
     }
 
