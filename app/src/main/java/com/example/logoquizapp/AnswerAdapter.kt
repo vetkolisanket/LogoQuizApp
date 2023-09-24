@@ -8,7 +8,6 @@ import com.example.logoquizapp.databinding.ItemAnswerBinding
 
 class AnswerAdapter: RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>() {
 
-    private var answer: String = ""
     val cells: MutableList<Cell> = mutableListOf()
     var position = 0
     var callback: AnswerAdapter.Callback? = null
@@ -19,7 +18,8 @@ class AnswerAdapter: RecyclerView.Adapter<AnswerAdapter.AnswerViewHolder>() {
     }
 
     fun setData(ans: String) {
-        answer = ans
+        position = 0
+        cells.clear()
         for (c in ans) {
             cells.add(Cell(c, false))
         }

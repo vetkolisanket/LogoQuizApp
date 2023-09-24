@@ -37,11 +37,12 @@ class MainActivity : ComponentActivity() {
                 }
 
                 override fun onRightGuess() {
-                    Toast.makeText(this@MainActivity, "Right guess", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@MainActivity, "Right guess", Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onAllCharsAnswered() {
                     Toast.makeText(this@MainActivity, "Next quiz", Toast.LENGTH_SHORT).show()
+                    viewModel.onQuizAnswered()
                 }
 
             }
@@ -59,11 +60,22 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun initObservers() {
-        viewModel.quizLiveData.observe(this) {
-            it?.let { quiz ->
-                binding.ivLogo.load(quiz.imageUrl)
-                answerAdapter.setData(quiz.name)
-                guessAdapter.setData(jumbleUp(quiz.name))
+        viewModel.apply {
+            quizLD.observe(this@MainActivity) {
+                it?.let { quiz ->
+                    binding.ivLogo.load(quiz.imageUrl)
+                    answerAdapter.setData(quiz.name)
+                    guessAdapter.setData(jumbleUp(quiz.name))
+                }
+            }
+            onAllQuizAnsweredLD.observe(this@MainActivity) {
+                if (it) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Congratulations! You have answered all the quizzes",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }

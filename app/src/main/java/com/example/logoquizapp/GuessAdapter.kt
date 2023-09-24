@@ -20,6 +20,7 @@ class GuessAdapter : RecyclerView.Adapter<GuessAdapter.GuessViewHolder>() {
     }
 
     fun setData(ans: List<Char>) {
+        guessChars.clear()
         guessChars.addAll(ans)
         notifyDataSetChanged()
     }
