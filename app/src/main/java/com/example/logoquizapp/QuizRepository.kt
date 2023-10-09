@@ -8,7 +8,7 @@ class QuizRepository {
     private val localDataSource: LocalDataSource by lazy { LocalDataSource() }
     private val remoteDataSource: RemoteDataSource by lazy { RemoteDataSource() }
 
-    suspend fun getQuizzes(): List<Quiz> {
+    suspend fun getQuizzes(): List<QuizLocalDataModel> {
         //We can replace with remote data source when needed
         return withContext(Dispatchers.IO) {
              localDataSource.getQuizzes()

@@ -10,10 +10,6 @@ import com.example.logoquizapp.databinding.ActivityMainBinding
 
 class MainActivity : ComponentActivity() {
 
-    val quiz = Quiz(
-        "https://www.dsource.in/sites/default/files/resource/logo-design/logos/logos-representing-india/images/01.jpeg",
-        "AADHAAR")
-
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
     private val answerAdapter: AnswerAdapter by lazy { AnswerAdapter() }
@@ -61,7 +57,7 @@ class MainActivity : ComponentActivity() {
 
     private fun initObservers() {
         viewModel.apply {
-            quizLD.observe(this@MainActivity) {
+            quizLocalDataModelLD.observe(this@MainActivity) {
                 it?.let { quiz ->
                     binding.ivLogo.load(quiz.imageUrl)
                     answerAdapter.setData(quiz.name)
