@@ -1,6 +1,8 @@
 package com.example.logoquizapp
 
-class LocalDataSource: QuizDataSource {
+import javax.inject.Inject
+
+class LocalDataSource @Inject constructor(): QuizDataSource {
     override fun getQuizzes(): List<QuizLocalDataModel> {
         return listOf(
             QuizLocalDataModel(

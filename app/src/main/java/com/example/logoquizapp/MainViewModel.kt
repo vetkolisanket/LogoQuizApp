@@ -4,9 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val quizRepository: QuizRepository) : ViewModel() {
 
     private val quizLocalDataModels = mutableListOf<QuizLocalDataModel>()
     private val _quizLocalDataModelLD: MutableLiveData<QuizLocalDataModel> = MutableLiveData()
@@ -30,6 +33,4 @@ class MainViewModel : ViewModel() {
             _quizLocalDataModelLD.value = quizLocalDataModels[currentQuizPosition]
         }
     }
-
-    private val quizRepository by lazy { QuizRepository() }
 }
