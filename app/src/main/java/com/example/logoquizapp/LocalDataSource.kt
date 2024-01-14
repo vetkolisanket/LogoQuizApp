@@ -1,6 +1,7 @@
 package com.example.logoquizapp
 
 import android.content.Context
+import com.google.gson.reflect.TypeToken
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONArray
 import javax.inject.Inject
@@ -28,15 +29,21 @@ class LocalDataSource @Inject constructor(@ApplicationContext private val contex
 //                "MYNTRA"),
 //        )
 //    }
+//    override fun getQuizzes(): List<QuizLocalDataModel> {
+//        val quizDataString = FileUtils.getAssetJsonData(context, "quizData.json") ?: return emptyList()
+//        val quizJsonArray = JSONArray(quizDataString)
+//        val quizzes = mutableListOf<QuizLocalDataModel>()
+//        for (i in 0 until quizJsonArray.length()) {
+//            val quizJSONObject = quizJsonArray.getJSONObject(i)
+//            quizzes.add(QuizLocalDataModel(quizJSONObject.getString("imageUrl"), quizJSONObject.getString("name")))
+//        }
+//        return quizzes
+//    }
+
     override fun getQuizzes(): List<QuizLocalDataModel> {
         val quizDataString = FileUtils.getAssetJsonData(context, "quizData.json") ?: return emptyList()
-        val quizJsonArray = JSONArray(quizDataString)
-        val quizzes = mutableListOf<QuizLocalDataModel>()
-        for (i in 0 until quizJsonArray.length()) {
-            val quizJSONObject = quizJsonArray.getJSONObject(i)
-            quizzes.add(QuizLocalDataModel(quizJSONObject.getString("imageUrl"), quizJSONObject.getString("name")))
-        }
-        return quizzes
+        val quizzes = GsonUtils.getObjectFromString<List<QuizLocalDataModel>>(quizDataString, object: TypeToken<List<QuizLocalDataModel>>(){}.type)
+        return quizzes ?: emptyList()
     }
 
 
