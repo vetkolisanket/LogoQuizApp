@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
     private fun initViews() {
         binding.rvAnswer.apply {
             this.adapter = answerAdapter
-            layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = GridLayoutManager(this@MainActivity, 2)
             answerAdapter.callback = object : AnswerAdapter.Callback {
                 override fun onWrongGuess() {
                     Toast.makeText(this@MainActivity, "Wrong guess", Toast.LENGTH_SHORT).show()
@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity() {
                 it?.let { quiz ->
                     binding.ivLogo.load(quiz.imageUrl)
                     answerAdapter.setData(quiz.name)
+                    (binding.rvAnswer.layoutManager as GridLayoutManager).spanCount = quiz.name.length
                     guessAdapter.setData(jumbleUp(quiz.name))
                 }
             }

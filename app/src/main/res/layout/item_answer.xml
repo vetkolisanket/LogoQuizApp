@@ -3,6 +3,7 @@
     android:id="@+id/tvCharacter"
     android:text="A"
     android:textSize="36sp"
+    android:gravity="center"
     android:layout_width="80dp"
     android:layout_height="80dp"
     android:layout_margin="16dp"
